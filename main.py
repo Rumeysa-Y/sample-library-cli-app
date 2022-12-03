@@ -6,7 +6,7 @@ from connect import connect
 import psycopg2
 from config import config
 import datetime
-from database import add, delete, signup, update
+from database import add, delete, signup, update, get_books
 
 
 console = Console()
@@ -45,10 +45,20 @@ def update_book():
    
    
 # Example function for tables, you can add more columns/row.
-@app.command("display_table")
-def display_table():
+
+@app.command("get_book")
+def get_book():
+    typer.echo(f"Books are displayed!")
+    books = get_books()
+    print(books)
+    display_table(books)
+
+
+def display_table(books):
+
+
     table = Table(show_header=True, header_style="bold blue")
-    table.add_column("#", style="dim", width=10)
+   
     table.add_column("Book ID", style="dim", min_width=10, justify=True)
     table.add_column("Book Name", style="dim", min_width=10, justify=True)
     table.add_column("Author", style="dim", min_width=10, justify=True)
@@ -56,13 +66,10 @@ def display_table():
     table.add_column("Genre", style="dim", min_width=10, justify=True)
     table.add_column("Availability", style="dim", min_width=10, justify=True)
     
+    for book in books:
+        table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]), book[6])
     
-    table.add_row('Value 1', 'Value 2','Value 1', 'Value 2','Value 1', 'Value 2','Value 2')
-    table.add_row('Value 3', 'Value 4','Value 1', 'Value 2','Value 1', 'Value 2','Value 2')
-    table.add_row('Value 5', 'Value 6','Value 1', 'Value 2','Value 1', 'Value 2','Value 2')
-    table.add_row('Value 1', 'Value 2','Value 1', 'Value 2','Value 1', 'Value 2','Value 2')
-    table.add_row('Value 3', 'Value 4','Value 1', 'Value 2','Value 1', 'Value 2','Value 2')
-    table.add_row('Value 5', 'Value 6','Value 1', 'Value 2','Value 1', 'Value 2','Value 2')
+    
 
     console.print(table)
 
