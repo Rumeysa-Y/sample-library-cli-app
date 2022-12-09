@@ -36,15 +36,15 @@ def add_book():
 
 
 @app.command("delete_book")
-def delete_book():
+def delete_book(book_id: int):
     typer.echo(f"Book is deleted!")
-    delete()
+    delete(book_id)
 
 
 @app.command("update_book")
-def update_book():
+def update_book(book_id: int):
     typer.echo(f"Book is updated!")
-    update() 
+    update(book_id) 
    
    
 # Example function for tables, you can add more columns/row.
@@ -77,7 +77,6 @@ def recently_added(author: Optional[str]= typer.Argument("")):
 def most_read_books(genre: Optional[str]= typer.Argument("")):
        typer.echo(f"Books are displayed!")
        books= mostread_books(genre)
-       print(books)
        table = Table(show_header=True, header_style="bold blue")
 
        table.add_column("Book ID", style="dim", min_width=10, justify=True)
@@ -154,71 +153,75 @@ def fav_book(book_id: int, user_id: int):
 def my_books(user_id: int):
     typer.echo("BOOKS YOU READ!")
     books = my_book_read(user_id)
-    table = Table(show_header=True, header_style="bold blue")
+    display_table(books)
+    # table = Table(show_header=True, header_style="bold blue")
 
-    table.add_column("Book ID", style="dim", min_width=10, justify=True)
-    table.add_column("Book Name", style="dim", min_width=10, justify=True)
-    table.add_column("Author", style="dim", min_width=10, justify=True)
-    table.add_column("Pages", style="dim", min_width=10, justify=True)
-    table.add_column("Genre", style="dim", min_width=10, justify=True)
-    table.add_column("Availability", style="dim", min_width=10, justify=True)
-    if bool(books) is True:
-        for book in books:
-            table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
-        console.print(table)
-    else:
-        console.print(table)
+    # table.add_column("Book ID", style="dim", min_width=10, justify=True)
+    # table.add_column("Book Name", style="dim", min_width=10, justify=True)
+    # table.add_column("Author", style="dim", min_width=10, justify=True)
+    # table.add_column("Pages", style="dim", min_width=10, justify=True)
+    # table.add_column("Genre", style="dim", min_width=10, justify=True)
+    # table.add_column("Availability", style="dim", min_width=10, justify=True)
+    # if bool(books) is True:
+    #     for book in books:
+    #         table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
+    #     console.print(table)
+    # else:
+    #     console.print(table)
 
     typer.echo("BOOKS YOU ARE READING!")
     books = my_book_reading(user_id)
-    table = Table(show_header=True, header_style="bold blue")
+    display_table(books)
+    # table = Table(show_header=True, header_style="bold blue")
 
-    table.add_column("Book ID", style="dim", min_width=10, justify=True)
-    table.add_column("Book Name", style="dim", min_width=10, justify=True)
-    table.add_column("Author", style="dim", min_width=10, justify=True)
-    table.add_column("Pages", style="dim", min_width=10, justify=True)
-    table.add_column("Genre", style="dim", min_width=10, justify=True)
-    table.add_column("Availability", style="dim", min_width=10, justify=True)
-    if bool(books) is True:
-        for book in books:
-            table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
-        console.print(table)
-    else:
-        console.print(table)
+    # table.add_column("Book ID", style="dim", min_width=10, justify=True)
+    # table.add_column("Book Name", style="dim", min_width=10, justify=True)
+    # table.add_column("Author", style="dim", min_width=10, justify=True)
+    # table.add_column("Pages", style="dim", min_width=10, justify=True)
+    # table.add_column("Genre", style="dim", min_width=10, justify=True)
+    # table.add_column("Availability", style="dim", min_width=10, justify=True)
+    # if bool(books) is True:
+    #     for book in books:
+    #         table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
+    #     console.print(table)
+    # else:
+    #     console.print(table)
 
     typer.echo("BOOKS YOU WILL READ!")
     books = my_book_will_read(user_id)
-    table = Table(show_header=True, header_style="bold blue")
+    display_table(books)
+    # table = Table(show_header=True, header_style="bold blue")
 
-    table.add_column("Book ID", style="dim", min_width=10, justify=True)
-    table.add_column("Book Name", style="dim", min_width=10, justify=True)
-    table.add_column("Author", style="dim", min_width=10, justify=True)
-    table.add_column("Pages", style="dim", min_width=10, justify=True)
-    table.add_column("Genre", style="dim", min_width=10, justify=True)
-    table.add_column("Availability", style="dim", min_width=10, justify=True)
-    if bool(books) is True:
-        for book in books:
-            table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
-        console.print(table)
-    else:
-        console.print(table)
+    # table.add_column("Book ID", style="dim", min_width=10, justify=True)
+    # table.add_column("Book Name", style="dim", min_width=10, justify=True)
+    # table.add_column("Author", style="dim", min_width=10, justify=True)
+    # table.add_column("Pages", style="dim", min_width=10, justify=True)
+    # table.add_column("Genre", style="dim", min_width=10, justify=True)
+    # table.add_column("Availability", style="dim", min_width=10, justify=True)
+    # if bool(books) is True:
+    #     for book in books:
+    #         table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
+    #     console.print(table)
+    # else:
+    #     console.print(table)
 
     typer.echo("YOUR FAVORITE BOOKS!")
     books = my_fav_book(user_id)
-    table = Table(show_header=True, header_style="bold blue")
+    display_table(books)
+    # table = Table(show_header=True, header_style="bold blue")
 
-    table.add_column("Book ID", style="dim", min_width=10, justify=True)
-    table.add_column("Book Name", style="dim", min_width=10, justify=True)
-    table.add_column("Author", style="dim", min_width=10, justify=True)
-    table.add_column("Pages", style="dim", min_width=10, justify=True)
-    table.add_column("Genre", style="dim", min_width=10, justify=True)
-    table.add_column("Availability", style="dim", min_width=10, justify=True)
-    if bool(books) is True:
-        for book in books:
-            table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
-        console.print(table)
-    else:
-        console.print(table)
+    # table.add_column("Book ID", style="dim", min_width=10, justify=True)
+    # table.add_column("Book Name", style="dim", min_width=10, justify=True)
+    # table.add_column("Author", style="dim", min_width=10, justify=True)
+    # table.add_column("Pages", style="dim", min_width=10, justify=True)
+    # table.add_column("Genre", style="dim", min_width=10, justify=True)
+    # table.add_column("Availability", style="dim", min_width=10, justify=True)
+    # if bool(books) is True:
+    #     for book in books:
+    #         table.add_row(str(book[0]),book[1], book[2], str(book[3]), book[4], str(book[5]))
+    #     console.print(table)
+    # else:
+    #     console.print(table)
 
 def display_table(books):
 

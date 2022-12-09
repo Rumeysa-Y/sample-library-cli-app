@@ -30,18 +30,19 @@ def add(book_name: str, author_name: str, pages: int, genre: str):
     conn.commit()
 
 
-def delete():
+def delete(book_id: int):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
-    sql = f""" DELETE FROM public.book where book_id = 8"""
+    sql = f""" DELETE FROM public.book where book_id = {book_id}"""
     cur.execute(sql)
     conn.commit()
 
-def update():
+##### which argument for the update function?????
+def update(book_id: int):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
     sql = f""" UPDATE book SET genre = 'Advanture'
-                WHERE book_id = 1
+                WHERE book_id = {book_id}
          """
     cur.execute(sql)
     conn.commit()
@@ -273,8 +274,7 @@ def fav_books(book_id: int, user_id: int):
     except:
         sql = f""" 
         UPDATE public.command SET fav_book = 'True' 
-        WHERE book_id = {book_id} and user_id = {user_id}
-        """
+        WHERE book_id = {book_id} and user_id = '{user_id}'        """
         cur.execute(sql)
         conn.commit()
 
@@ -282,13 +282,14 @@ def my_book_read(user_id: int):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
     sql1 = f"""
-        SELECT 
+        SELECT DISTINCT
                 command.book_id,
                 book_name,
                 author_name,
                 pages,
                 genre,
-                availability
+                availability,
+                book_date_added
         FROM command 
         INNER JOIN book ON command.book_id = book.book_id
         WHERE mark_read = 'True' and user_id= {user_id}
@@ -302,13 +303,14 @@ def my_book_reading(user_id: int):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
     sql1 = f"""
-        SELECT 
+        SELECT DISTINCT
                 command.book_id,
                 book_name,
                 author_name,
                 pages,
                 genre,
-                availability
+                availability,
+                book_date_added
         FROM command 
         INNER JOIN book ON command.book_id = book.book_id
         WHERE mark_reading = 'True' and user_id= {user_id}
@@ -322,13 +324,14 @@ def my_book_will_read(user_id: int):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
     sql1 = f"""
-        SELECT 
+        SELECT DISTINCT
                 command.book_id,
                 book_name,
                 author_name,
                 pages,
                 genre,
-                availability
+                availability,
+                book_date_added
         FROM command 
         INNER JOIN book ON command.book_id = book.book_id
         WHERE mark_will_read = 'True' and user_id= {user_id}
@@ -342,13 +345,14 @@ def my_fav_book(user_id: int):
     conn = psycopg2.connect(**params)
     cur = conn.cursor()
     sql1 = f"""
-        SELECT 
+        SELECT DISTINCT
                 command.book_id,
                 book_name,
                 author_name,
                 pages,
                 genre,
-                availability
+                availability,
+                book_date_added
         FROM command 
         INNER JOIN book ON command.book_id = book.book_id
         WHERE fav_book = 'True' and user_id= {user_id}
